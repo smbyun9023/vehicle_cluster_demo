@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: airflow-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: airflow
+  template:
+    metadata:
+      labels:
+        app: airflow
+    spec:
+      containers:
+      - name: airflow
+        image: airflow:latest
+        imagePullPolicy: Never  # 로컬 이미지 사용
+        ports:
+        - containerPort: 8080
+        command: ["airflow", "standalone"]   # standalone 모드 실행
+        env:
+          - name: _AIRFLOW_WWW_USER_PASSWORD
+            value: "airflow"  # 웹 UI 관리자 암호 (원하는 값으로 변경)

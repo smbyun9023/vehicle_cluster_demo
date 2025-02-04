@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+      - name: backend
+        image: backend:latest  # 로컬에서 빌드한 Docker 이미지 이름
+        imagePullPolicy: Never  # 이미지를 로컬에서 가져오기 때문에 Never로 설정
+        ports:
+        - containerPort: 8000
