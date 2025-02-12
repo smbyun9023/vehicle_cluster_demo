@@ -1,13 +1,13 @@
-from django.conf import settings
+from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from rest_framework.routers import SimpleRouter
+from vehicle_demo.users.api.views import VehicleSensorDataViewSet, VehicleAnalyticsViewSet, RouteOptimizationViewSet, AlertHistoryViewSet
 
-from vehicle_demo.users.api.views import UserViewSet
+router = DefaultRouter()
+router.register(r'vehicle-sensors', VehicleSensorDataViewSet)
+router.register(r'vehicle-analytics', VehicleAnalyticsViewSet)
+router.register(r'route-optimization', RouteOptimizationViewSet)
+router.register(r'alert-history', AlertHistoryViewSet)
 
-router = DefaultRouter() if settings.DEBUG else SimpleRouter()
-
-router.register("users", UserViewSet)
-
-
-app_name = "api"
-urlpatterns = router.urls
+urlpatterns = [
+    path('api/', include(router.urls)),
+]

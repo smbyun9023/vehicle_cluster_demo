@@ -1,26 +1,24 @@
-from rest_framework import status
-from rest_framework.decorators import action
-from rest_framework.mixins import ListModelMixin
-from rest_framework.mixins import RetrieveModelMixin
-from rest_framework.mixins import UpdateModelMixin
+from rest_framework import status, viewsets
 from rest_framework.response import Response
-from rest_framework.viewsets import GenericViewSet
+from vehicle_demo.users.models import VehicleSensorData, VehicleAnalytics, RouteOptimization, AlertHistory
+from .serializers import VehicleSensorDataSerializer, VehicleAnalyticsSerializer, RouteOptimizationSerializer, AlertHistorySerializer
 
-from vehicle_demo.users.models import User
+# 차량 센서 데이터 뷰셋
+class VehicleSensorDataViewSet(viewsets.ModelViewSet):
+    queryset = VehicleSensorData.objects.all()
+    serializer_class = VehicleSensorDataSerializer
 
-from .serializers import UserSerializer
+# 차량 분석 데이터 뷰셋
+class VehicleAnalyticsViewSet(viewsets.ModelViewSet):
+    queryset = VehicleAnalytics.objects.all()
+    serializer_class = VehicleAnalyticsSerializer
 
+# 경로 최적화 데이터 뷰셋
+class RouteOptimizationViewSet(viewsets.ModelViewSet):
+    queryset = RouteOptimization.objects.all()
+    serializer_class = RouteOptimizationSerializer
 
-class UserViewSet(RetrieveModelMixin, ListModelMixin, UpdateModelMixin, GenericViewSet):
-    serializer_class = UserSerializer
-    queryset = User.objects.all()
-    lookup_field = "username"
-
-    def get_queryset(self, *args, **kwargs):
-        assert isinstance(self.request.user.id, int)
-        return self.queryset.filter(id=self.request.user.id)
-
-    @action(detail=False)
-    def me(self, request):
-        serializer = UserSerializer(request.user, context={"request": request})
-        return Response(status=status.HTTP_200_OK, data=serializer.data)
+# 알림 기록 데이터 뷰셋
+class AlertHistoryViewSet(viewsets.ModelViewSet):
+    queryset = AlertHistory.objects.all()
+    serializer_class = AlertHistorySerializer

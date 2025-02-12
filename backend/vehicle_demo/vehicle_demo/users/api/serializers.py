@@ -1,13 +1,27 @@
 from rest_framework import serializers
+from vehicle_demo.users.models import VehicleSensorData, VehicleAnalytics, RouteOptimization, AlertHistory
 
-from vehicle_demo.users.models import User
 
-
-class UserSerializer(serializers.ModelSerializer[User]):
+# 차량 센서 데이터 직렬화
+class VehicleSensorDataSerializer(serializers.ModelSerializer):
     class Meta:
-        model = User
-        fields = ["username", "name", "url"]
+        model = VehicleSensorData
+        fields = '__all__'
 
-        extra_kwargs = {
-            "url": {"view_name": "api:user-detail", "lookup_field": "username"},
-        }
+# 차량 분석 데이터 직렬화
+class VehicleAnalyticsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = VehicleAnalytics
+        fields = '__all__'
+
+# 경로 최적화 데이터 직렬화
+class RouteOptimizationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = RouteOptimization
+        fields = '__all__'
+
+# 알림 기록 데이터 직렬화
+class AlertHistorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AlertHistory
+        fields = '__all__'

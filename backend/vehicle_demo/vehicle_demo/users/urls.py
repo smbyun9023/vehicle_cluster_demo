@@ -1,12 +1,9 @@
+#users\urls.py
 from django.urls import path
 
-from .views import user_detail_view
-from .views import user_redirect_view
-from .views import user_update_view
-
 app_name = "users"
+
 urlpatterns = [
-    path("~redirect/", view=user_redirect_view, name="redirect"),
-    path("~update/", view=user_update_view, name="update"),
-    path("<str:username>/", view=user_detail_view, name="detail"),
+    # 여기서는 사용자 관리 URL만 포함
+    # 예: path("profile/", ProfileView.as_view(), name="profile")
 ]
